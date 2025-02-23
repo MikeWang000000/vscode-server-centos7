@@ -28,7 +28,9 @@ check_vscode () {
 }
 
 check_patchelf () {
-    hash -p "$PWD/bin/patchelf" patchelf
+    if [[ -e "$PWD/bin/patchelf" ]]; then
+        hash -p "$PWD/bin/patchelf" patchelf
+    fi
     patchelf --version >/dev/null || {
         echo "ERROR: patchelf does not work" >&2
         exit 1
