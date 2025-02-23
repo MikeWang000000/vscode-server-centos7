@@ -45,18 +45,27 @@ is_elf () {
 }
 
 do_patch () {
-    local fname rpath rpath_new interp
+    local fname needed rpath interp
     fname=$1
 
-    rpath=$(patchelf --print-rpath "$fname" || echo "<failure>")
-    if [[ "$rpath" != "<failure>" ]] && [[ ! "$rpath" =~ (^|:)"$RPATH"(:|$) ]]; then
-        echo "Patching rpath for $fname ..."
-        patchelf --set-rpath "$RPATH${rpath:+:$rpath}" "$fname"
+    interp=$(patchelf --print-interpreter "$fname" 2>/dev/null || true)
+    if [[ -n "$interp" ]] && [[ "$interp" != "/lib64/ld-linux-x86-64.so.2" ]]; then
+        return
     fi
 
-    interp=$(patchelf --print-interpreter "$fname" 2>/dev/null || true)
-    if [[ -n "$interp" ]] && [[ "$interp" != "$INTERP" ]]; then
-        echo "Patching interpreter for $fname ..."
+    needed=$(patchelf --print-needed "$fname" 2>/dev/null || true)
+    if [[ $'\n'"$needed"$'\n' != *$'\n'"libc.so.6"$'\n'* ]]; then
+        return
+    fi
+
+    rpath=$(patchelf --print-rpath "$fname" 2>/dev/null || echo "<failure>")
+    if [[ "$rpath" = *"<failure>" ]] || [[ ":$rpath:" = *":$RPATH:"* ]]; then
+        return
+    fi
+
+    echo "Patching $fname ..."
+    patchelf --set-rpath "${rpath:+$rpath:}$RPATH" "$fname"
+    if [[ -n "$interp" ]]; then
         patchelf --set-interpreter "$INTERP" "$fname"
     fi
 }
