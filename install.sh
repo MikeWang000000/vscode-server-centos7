@@ -54,6 +54,13 @@ backup_vscodeserver () {
         mkdir "$backup_dir/cli"
         mv ~/.vscode-server/cli/servers "$backup_dir/cli"
     fi
+
+    echo "Backing up vscode extension files..."
+
+    if [[ -e ~/.vscode-server/extensions ]]; then
+        mkdir "$backup_dir/extensions"
+        cp -a ~/.vscode-server/extensions "$backup_dir/extensions"
+    fi
 }
 
 install_vscodeserver () {
@@ -64,13 +71,16 @@ install_vscodeserver () {
 install_el9 () {
     if [[ "${NOROOT:-}" = "1" ]]; then
         tar -xzf el9.tar.gz -C ~/.vscode-server/
-        (cd ~/.vscode-server/ && ./patch.sh)
     else
         sudo tar -xzf el9.tar.gz -C /lib64/ || {
             echo "ERROR: cannot install EL9 libraries to /lib64. Run NOROOT=1 ./install.sh if you do not have root privileges." >&2
             return 1
         }
     fi
+}
+
+patch_vscodeserver () {
+    (cd ~/.vscode-server/ && ./patch.sh)
 }
 
 step "Checking tarballs..."
@@ -87,3 +97,6 @@ install_vscodeserver
 
 step "Installing EL9 libraries..."
 install_el9
+
+step "Patching vscode server..."
+patch_vscodeserver
