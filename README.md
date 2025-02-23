@@ -66,7 +66,7 @@ cd ~/.vscode-server
     **A:** You can run this script on another computer with Internet access inside Docker. Run the following commands:
 
     ```bash
-    docker run -it --rm centos:7 -v "$PWD:/root" /root/make.sh
+    docker run -it --rm -v "$PWD:/root" -w /root/ centos:7 ./make.sh
     ```
 
     Then, copy `el9.tar.gz` and `vscode-server.tar.gz` to your server. After that, run `./install.sh` on your server.
