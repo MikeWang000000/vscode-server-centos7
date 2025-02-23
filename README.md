@@ -16,6 +16,8 @@ If your server has Internet access and you can use the `sudo` command, type the 
 
 The latest patched VS Code Server will be installed at `~/.vscode-server`, and the EL9 libc and libstdc++ libraries will be installed at `/lib64/el9`.
 
+You can delete `~/.vscode-server-backup*` directories if you don't need them.
+
 
 ## Patching Extensions
 
