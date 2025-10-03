@@ -53,13 +53,13 @@ def get_latest_vscode(name):
 
 
 def get_latest_binutils_tar():
-    url = 'https://ftp.gnu.org/gnu/binutils/'
+    url = 'https://mirrors.kernel.org/gnu/binutils/'
     ver, tarname = get_latest(url, r'binutils-([0-9]+(:?\.[0-9]+)+).tar.xz')
     return ver, url + tarname
 
 
 def get_latest_gcc_tar():
-    url = 'https://ftp.gnu.org/gnu/gcc/'
+    url = 'https://mirrors.kernel.org/gnu/gcc/'
     _, versiondir = get_latest(url, r'gcc-([0-9]+(:?\.[0-9]+)+)/')
     ver, tarname = get_latest(url + versiondir, r'gcc-([0-9]+(:?\.[0-9]+)+).tar.xz')
     return ver, url + versiondir + tarname
@@ -67,14 +67,14 @@ def get_latest_gcc_tar():
 
 def get_latest_glibc_tar():
     # Pin glibc version to 2.41 temporarily
-    return "2.41", "https://ftp.gnu.org/gnu/glibc/glibc-2.41.tar.xz"
-    # url = 'https://ftp.gnu.org/gnu/glibc/'
+    return "2.41", "https://mirrors.kernel.org/gnu/glibc/glibc-2.41.tar.xz"
+    # url = 'https://mirrors.kernel.org/gnu/glibc/'
     # ver, tarname = get_latest(url, r'glibc-([0-9]+(:?\.[0-9]+)+).tar.xz')
     # return ver, url + tarname
 
 
 def get_latest_gmp_tar():
-    url = 'https://ftp.gnu.org/gnu/gmp/'
+    url = 'https://mirrors.kernel.org/gnu/gmp/'
     ver, tarname = get_latest(url, r'gmp-([0-9]+(:?\.[0-9]+)+).tar.xz')
     return ver, url + tarname
 
@@ -87,13 +87,13 @@ def get_latest_linux_tar():
 
 
 def get_latest_mpc_tar():
-    url = 'https://ftp.gnu.org/gnu/mpc/'
+    url = 'https://mirrors.kernel.org/gnu/mpc/'
     ver, tarname = get_latest(url, r'mpc-([0-9]+(:?\.[0-9]+)+).tar.gz')
     return ver, url + tarname
 
 
 def get_latest_mpfr_tar():
-    url = 'https://ftp.gnu.org/gnu/mpfr/'
+    url = 'https://mirrors.kernel.org/gnu/mpfr/'
     ver, tarname = get_latest(url, r'mpfr-([0-9]+(:?\.[0-9]+)+).tar.xz')
     return ver, url + tarname
 
