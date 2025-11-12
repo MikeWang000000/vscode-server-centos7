@@ -1,7 +1,7 @@
 binutils_filename=binutils-src.tar.xz
-binutils_sha256=c50c0e7f9cb188980e2cc97e4537626b1672441815587f1eab69d2a1bfbef5d2
-binutils_url=https://mirrors.kernel.org/gnu/binutils/binutils-2.45.tar.xz
-binutils_version=2.45
+binutils_sha256=5fe101e6fe9d18fdec95962d81ed670fdee5f37e3f48f0bef87bddf862513aa5
+binutils_url=https://mirrors.kernel.org/gnu/binutils/binutils-2.45.1.tar.xz
+binutils_version=2.45.1
 gcc_filename=gcc-src.tar.xz
 gcc_sha256=438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e
 gcc_url=https://mirrors.kernel.org/gnu/gcc/gcc-15.2.0/gcc-15.2.0.tar.xz
