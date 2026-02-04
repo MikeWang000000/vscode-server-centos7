@@ -87,6 +87,8 @@ $(VSCODE_SERVER_TAR): $(VSCODE_DEPS) $(TOOLCHAIN) $(CLI_TAR) $(SRV_TAR) $(CODEBI
 	tar xf $(SRV_TAR) -C $(BUILDDIR)/srv --strip-components=1
 	mkdir -p "$(VSCODE_SERVER_DIR)/cli/servers/Stable-$$(cat $(DEPSDIR)/vscode-version.txt)"
 	cp -a $(BUILDDIR)/srv "$(VSCODE_SERVER_DIR)/cli/servers/Stable-$$(cat $(DEPSDIR)/vscode-version.txt)/server"
+	mkdir -p "$(VSCODE_SERVER_DIR)/bin"
+	ln -s "../cli/servers/Stable-$$(cat $(DEPSDIR)/vscode-version.txt)/server" "$(VSCODE_SERVER_DIR)/bin/$$(cat $(DEPSDIR)/vscode-version.txt)"
 	mkdir -p $(VSCODE_SERVER_DIR)/gnu
 	if [ -e '$(CROSS_LIB64DIR)' ]; then cp -a '$(CROSS_LIB64DIR)'/. $(VSCODE_SERVER_DIR)/gnu; fi
 	cp -a '$(CROSS_LIBDIR)'/. $(VSCODE_SERVER_DIR)/gnu
