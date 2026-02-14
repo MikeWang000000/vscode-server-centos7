@@ -81,9 +81,26 @@ def get_latest_gmp_tar():
 
 def get_latest_linux_tar():
     url = 'https://cdn.kernel.org/pub/linux/kernel/'
-    _, versiondir = get_latest(url, r'v([0-9]+).x/')
-    ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
-    return ver, url + versiondir + tarname
+    res = urllib.request.urlopen(url)
+    content = res.read().decode()
+    res.close()
+
+    version_dirs = []
+    for link in re.findall(r'<a href[^>]*>([^<]*)</a>', content):
+        match = re.match(r'v([0-9]+).x/', link)
+        if match:
+            version_dirs.append((int(match.group(1)), link))
+
+    version_dirs.sort(reverse=True)
+
+    for _, versiondir in version_dirs:
+        try:
+            ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
+            return ver, url + versiondir + tarname
+        except ValueError:
+            continue
+
+    raise ValueError('No linux source tarball found in any kernel major-version directory')
 
 
 def get_latest_mpc_tar():
