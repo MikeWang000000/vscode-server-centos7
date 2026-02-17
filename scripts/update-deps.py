@@ -10,7 +10,7 @@ def eprint(msg):
     sys.stderr.write("%s\n" % (msg,))
 
 
-def get_latest(url, pattern):
+def get_all(url, pattern):
     if type(pattern) is str:
         pattern = re.compile(pattern)
     res = urllib.request.urlopen(url)
@@ -25,7 +25,11 @@ def get_latest(url, pattern):
     if not matches:
         raise ValueError
     matches.sort(key = lambda m: [int(v) for v in m.group(1).split('.')])
-    return matches[-1].group(1), matches[-1].group(0)
+    return [(m.group(1), m.group(0)) for m in matches]
+
+
+def get_latest(url, pattern):
+    return get_all(url, pattern)[-1]
 
 
 def get_sha256(url):
@@ -81,8 +85,12 @@ def get_latest_gmp_tar():
 
 def get_latest_linux_tar():
     url = 'https://cdn.kernel.org/pub/linux/kernel/'
-    _, versiondir = get_latest(url, r'v([0-9]+).x/')
-    ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
+    for _, versiondir in reversed(get_all(url, r'v([0-9]+).x/')):
+        try:
+            ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
+            break
+        except ValueError:
+            continue
     return ver, url + versiondir + tarname
 
 
