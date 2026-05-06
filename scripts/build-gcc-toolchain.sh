@@ -76,6 +76,7 @@ cd builddir
     --target="$TARGET_TRIPLET" \
     --prefix="$PREFIX" \
     --enable-languages=c,c++ \
+    --disable-libatomic \
     --disable-multilib \
     --with-newlib
 
@@ -88,6 +89,7 @@ make install-gcc
 cd "$BUILDDIR/glibc"
 
 patch -p1 < "$PATCHDIR/glibc.patch"
+patch -p1 < "$PATCHDIR/glibc-fix.patch"
 
 mkdir -p builddir
 cd builddir

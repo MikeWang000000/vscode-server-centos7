@@ -70,11 +70,9 @@ def get_latest_gcc_tar():
 
 
 def get_latest_glibc_tar():
-    # Pin glibc version to 2.42 temporarily
-    return "2.42", "https://mirrors.kernel.org/gnu/glibc/glibc-2.42.tar.xz"
-    # url = 'https://mirrors.kernel.org/gnu/glibc/'
-    # ver, tarname = get_latest(url, r'glibc-([0-9]+(:?\.[0-9]+)+).tar.xz')
-    # return ver, url + tarname
+    url = 'https://mirrors.kernel.org/gnu/glibc/'
+    ver, tarname = get_latest(url, r'glibc-([0-9]+(:?\.[0-9]+)+).tar.xz')
+    return ver, url + tarname
 
 
 def get_latest_gmp_tar():
@@ -84,16 +82,14 @@ def get_latest_gmp_tar():
 
 
 def get_latest_linux_tar():
-    # Pin linux version to 6.19.12 temporarily
-    return "6.19.12", "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.19.12.tar.xz"
-    # url = 'https://cdn.kernel.org/pub/linux/kernel/'
-    # for _, versiondir in reversed(get_all(url, r'v([0-9]+).x/')):
-    #     try:
-    #         ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
-    #         break
-    #     except ValueError:
-    #         continue
-    # return ver, url + versiondir + tarname
+    url = 'https://cdn.kernel.org/pub/linux/kernel/'
+    for _, versiondir in reversed(get_all(url, r'v([0-9]+).x/')):
+        try:
+            ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
+            break
+        except ValueError:
+            continue
+    return ver, url + versiondir + tarname
 
 
 def get_latest_mpc_tar():
