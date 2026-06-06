@@ -132,6 +132,7 @@ make install
 # GCC (final)
 cd "$BUILDDIR"/gcc/builddir
 
+ln -sfn include "$PREFIX/$TARGET_TRIPLET/sys-include"
 make distclean
 ../configure \
     --build="$BUILD_TRIPLET" \
