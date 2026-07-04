@@ -82,14 +82,16 @@ def get_latest_gmp_tar():
 
 
 def get_latest_linux_tar():
-    url = 'https://cdn.kernel.org/pub/linux/kernel/'
-    for _, versiondir in reversed(get_all(url, r'v([0-9]+).x/')):
-        try:
-            ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
-            break
-        except ValueError:
-            continue
-    return ver, url + versiondir + tarname
+    # Pin linux version to 7.1.2 temporarily
+    return "7.1.2", "https://fossies.org/linux/kernel/v7.1/linux-7.1.2.tar.xz"
+    # url = 'https://cdn.kernel.org/pub/linux/kernel/'
+    # for _, versiondir in reversed(get_all(url, r'v([0-9]+).x/')):
+    #     try:
+    #         ver, tarname = get_latest(url + versiondir, r'linux-([0-9]+(:?\.[0-9]+)+).tar.xz')
+    #         break
+    #     except ValueError:
+    #         continue
+    # return ver, url + versiondir + tarname
 
 
 def get_latest_mpc_tar():
