@@ -89,7 +89,6 @@ make install-gcc
 cd "$BUILDDIR/glibc"
 
 patch -p1 < "$PATCHDIR/glibc.patch"
-patch -p1 < "$PATCHDIR/glibc-fix.patch"
 
 mkdir -p builddir
 cd builddir
